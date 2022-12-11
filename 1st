@@ -1,0 +1,73 @@
+import requests
+from bs4 import BeautifulSoup
+
+url = 'https://webtoon'
+res = requests.get(url)
+res.raise_for_status()
+
+soup = BeautifulSoup(res.text, 'lxml')
+print(soup.title)
+print(soup.title.get_text())
+print(soup.a) # soup 객체에서 처음 발견되는 a element 가져옴
+print(soup.a.attrs) # a element의 속성 정보 출력
+print(soup.a['href']) # a element의 href 속성 '값' 정보를 출력
+
+print(soup.find('a', attrs={'class':'Nbtn_upload'})) # class='Nbtn_upload'인 a element를 찾아줘
+print(soup.find(attrs={'class':'Nbtn_upload'})) # class = 'Nbtn_upload' 인 element를 찾아줘
+
+print(soup.find('li', attrs={"class":"rank01"}))
+rank1 = soup.find('li', attrs={"class":"rank01"})
+print(rank1.a) # li 하위 a 를 출력 #자식 이동
+print(rank1.a.get_text()) 
+rank2 = rank1.next_sibling.next_sibling # sibling이 한 번으로도 될 수 있지만 두 번이 필요할 수 도 있음
+rank3 = rank2.next_sibling.next_sibling # 형제로 이동
+print(rank3.a.get_text())
+rank2 = rank3.previous_sibling.previous_sibling
+print(rank2.a.get_text())
+print(rank1.parent) #부모로 이동
+rank2 = rank1.find_next_sibling("li")
+print(rank2.a.get_text())
+rank2 = rank3.find_previous_sibling("li")
+print(rank2.a.get_text())
+
+rank1.find_netxsiblings("li")
+
+webtoon = soup.find('a', text="독립일기-11화")
+print(webtoon)
+--------------------------------------------------------------------------------------------
+soup = BeautifulSoup(res.text, 'lxml')
+cartoons = soup.find_all('a', attrs = {"class":"title"})
+for cartoon in cartoons:
+  print(cartoon.get_text())
+  
+--------------------------------------------------------------------------------------------
+url = "https://wetoon 안 내용"
+res = requests.get(url)
+res.raise_for_status()
+
+soup = BeautifulSoup(res.text, 'lxml')
+cartoons = soup.find_all("td", attr={"class":"title"})
+title = cartoons[0].a.get_text()
+link = carttons[0].a["href"]
+print(title)
+print("https://" + link)
+
+# 만화 제목 + 링크 가져오기
+for cartoon in carttons:
+  title = cartoon.a.get_text(0
+  link = "http://" + catoon.a["href"]
+  print(title, link)
+  
+--------------------------------------------------------------------------------------------
+# 평점 구하기
+soup = BeautifulSoup(res.text, 'lxml')
+total_rates = 0
+cartoons = soup.find_all("div", attr={"class":"rating_type"})
+for cartoon in cartoons:
+  rate = cartoon.find("strong").get_text()
+  print(rate)
+  total_rates += float(rate)
+print("전체 점수: ", total_rates)
+print("평균 점수: ", total_rates / len(cartoons))
+
+
