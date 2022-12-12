@@ -1,0 +1,35 @@
+from selenium import webdriver
+
+browser = webdrver.Chrome() # ()에 경로를 적어야 함
+browser.get("http://naver.com")
+
+elem = browser.find_element_by_class_name("link_login")
+elem.click()
+browser.back()
+browser.forward()
+browser.refresh()
+elem = browser.finde_element_by_id("query")
+
+from selenium.webdriver.common.keys import Keys
+elem.send_keys("나도코딩")
+elem.send_keys(keys.ENTER)
+
+elem = brwoser.find_elements_by_tag_name("a")
+
+for e in elem:
+  e.get_attribute("href")
+
+
+browser.get("http://daum.net")
+elem = browser.find_element_by_name("q")
+elem
+elem.send_keys("나도코딩")
+elem.send_keys(Keys.ENTER)
+browser.back()
+
+elem = browser.find_element_by_name("q")
+elem
+elem.send_keys("나도코딩")
+elem = browser.find(element_by_xpath("//*[@id='daum~~~])
+elem.click()
+brower.quit()
